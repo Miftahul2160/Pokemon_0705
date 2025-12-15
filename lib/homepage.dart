@@ -95,7 +95,7 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.network(pokemon.imageUrl, height: 100, fit: BoxFit.cover),
+              Image.network(pokemon.imageUrl, fit: BoxFit.contain),
               SizedBox(height: 10),
               Text(
                 pokemon.name,
@@ -105,10 +105,10 @@ class _HomePageState extends State<HomePage> {
                   color: Colors.blueAccent,
                 ),
               ),
-              SizedBox(height: 10),
+              SizedBox(height: 2),
               Text(
                 pokemon.id.toString(),
-                style: TextStyle(fontSize: 18, color: Colors.blueAccent),
+                style: TextStyle(fontSize: 16, color: Colors.blueAccent),
               ),
             ],
           ),
