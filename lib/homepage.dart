@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:pokemon/detailcard.dart';
 import 'package:pokemon/model/dummy_data.dart';
+import 'package:pokemon/model/pokemon_data.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -19,7 +21,8 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              const Text(
+              SizedBox(height: 20),
+              Text(
                 'Pokedex',
                 style: TextStyle(
                   fontSize: 34,
@@ -27,10 +30,12 @@ class _HomePageState extends State<HomePage> {
                   color: Colors.blueAccent,
                 ),
               ),
-              const Text(
+              SizedBox(height: 20),
+              Text(
                 'Search for a pokemon by name or using its National Pokedex number.',
                 style: TextStyle(fontSize: 20, color: Colors.blueAccent),
                 ),
+              SizedBox(height: 20),
               TextField(
                 controller: searchNameController,
                 decoration: InputDecoration(
@@ -41,8 +46,10 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ),
               ),
+              SizedBox(height: 20),
               Expanded(
-                child: GridView.builder(
+                child: 
+                GridView.builder(
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     crossAxisSpacing: 10,
@@ -51,16 +58,57 @@ class _HomePageState extends State<HomePage> {
                   itemCount: dummyPokemonsList.length,  
                   itemBuilder: (context, index) {
                     final pokemon =  dummyPokemonsList[index];
-
-                    return GestureDetector(
-                      onTap: () => print('Tapped on ${pokemon.name}'),
-                    );
+                    return listPokemon(context, pokemon);
                   }
-                    ))
+                    )
+
+                    )
               ],
           ),
         ),
       ),
     );
   }
+  
+  listPokemon(BuildContext context, PokemonData pokemon) {
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => DetailCard(pokemon: pokemon),
+          ),
+        );
+      },
+      child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12.0),
+        ),
+        elevation: 4,
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.network(
+                pokemon.imageUrl,
+                height: 100,
+                fit: BoxFit.cover,
+              ),
+              SizedBox(height: 10),
+              Text(
+                pokemon.name,
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  
 }
